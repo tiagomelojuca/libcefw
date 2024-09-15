@@ -16,7 +16,7 @@ const char* ce_string_c_str(ce_string_t cestr);
 size_t      ce_string_size(ce_string_t cestr);
 void        ce_string_reserve(ce_string_t cestr, size_t capacity);
 void        ce_string_set_char(ce_string_t cestr, size_t pos, char c);
-void        ce_string_append(ce_string_t cestr, const char* cstr);
+void        ce_string_assign(ce_string_t cestr, const char* cstr);
 
 // ----------------------------------------------------------------------------
 
