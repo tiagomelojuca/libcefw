@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+// ---------------------------------------------------------------------------------
+
 struct CeString
 {
     size_t capacity;
@@ -10,35 +12,15 @@ struct CeString
     char*  rawPointer;
 };
 
+// ---------------------------------------------------------------------------------
+
 ce_string_t ce_string_new(const char* cstr)
 {
-    ce_string_t cestr = ce_string_alloc();
-    ce_string_default_init(cestr);
+    ce_string_t cestr = _ce_string_alloc();
+    _ce_string_default_init(cestr);
     ce_string_assign(cestr, cstr);
 
     return cestr;
-}
-
-ce_string_t ce_string_alloc()
-{
-    return (struct CeString*) malloc(sizeof(struct CeString));
-}
-
-void ce_string_default_init(ce_string_t cestr)
-{
-    const size_t DEFAULT_CAPACITY      = 4;
-    const size_t DEFAULT_GROWTH_FACTOR = 2;
-
-    ce_string_init(cestr, DEFAULT_CAPACITY, DEFAULT_GROWTH_FACTOR);
-}
-
-void ce_string_init(ce_string_t cestr, size_t capacity, size_t delta)
-{
-    cestr->capacity     = capacity;
-    cestr->growthFactor = delta;
-    cestr->rawPointer   = (char*) malloc(cestr->capacity);
-
-    memset(cestr->rawPointer, 0, cestr->capacity);
 }
 
 void ce_string_free(ce_string_t cestr)
@@ -90,3 +72,29 @@ void ce_string_assign(ce_string_t cestr, const char* cstr)
 
     memcpy(cestr->rawPointer, cstr, srcBufLen);
 }
+
+// ---------------------------------------------------------------------------------
+
+ce_string_t _ce_string_alloc()
+{
+    return (struct CeString*) malloc(sizeof(struct CeString));
+}
+
+void _ce_string_default_init(ce_string_t cestr)
+{
+    const size_t DEFAULT_CAPACITY      = 32;
+    const size_t DEFAULT_GROWTH_FACTOR =  2;
+
+    _ce_string_init(cestr, DEFAULT_CAPACITY, DEFAULT_GROWTH_FACTOR);
+}
+
+void _ce_string_init(ce_string_t cestr, size_t capacity, size_t delta)
+{
+    cestr->capacity     = capacity;
+    cestr->growthFactor = delta;
+    cestr->rawPointer   = (char*) malloc(cestr->capacity);
+
+    memset(cestr->rawPointer, 0, cestr->capacity);
+}
+
+// ---------------------------------------------------------------------------------
