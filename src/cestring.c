@@ -10,12 +10,18 @@ struct CeString
     char*  rawPointer;
 };
 
-ce_string_t ce_string_new()
+ce_string_t ce_string_new(const char* cstr)
 {
-    ce_string_t cestr = (struct CeString*) malloc(sizeof(struct CeString));
+    ce_string_t cestr = ce_string_alloc();
     ce_string_default_init(cestr);
+    ce_string_assign(cestr, cstr);
 
     return cestr;
+}
+
+ce_string_t ce_string_alloc()
+{
+    return (struct CeString*) malloc(sizeof(struct CeString));
 }
 
 void ce_string_default_init(ce_string_t cestr)
