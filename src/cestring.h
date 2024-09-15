@@ -3,6 +3,10 @@
 
 #include <stddef.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // ---------------------------------------------------------------------------------
 typedef struct CeString* ce_string_t; // Opaque Pointer (aka Opaque Handle)
 // ---------------------------------------------------------------------------------
@@ -23,5 +27,9 @@ typedef struct CeString* ce_string_t; // Opaque Pointer (aka Opaque Handle)
     void        _ce_string_init(ce_string_t cestr, size_t capacity, size_t delta);
 
 // ---------------------------------------------------------------------------------
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // CESTRING_H_
