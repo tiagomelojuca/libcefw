@@ -46,13 +46,18 @@ const char* ce_string_c_str(ce_string_t cestr)
     return cestr->rawPointer;
 }
 
+size_t ce_string_size(ce_string_t cestr)
+{
+    return strlen(cestr->rawPointer);
+}
+
 void ce_string_reserve(ce_string_t cestr, size_t capacity)
 {
     if (capacity > cestr->capacity)
     {
         char* newRawPointer = (char*) malloc(capacity);
         memcpy(newRawPointer, cestr->rawPointer, cestr->capacity);
-        memset(&newRawPointer[cestr->capacity], 0, capacity - cestr->capacity);
+        // memset(&newRawPointer[cestr->capacity], 0, capacity - cestr->capacity); // seens unnecessary
         free(cestr->rawPointer);
 
         cestr->capacity = capacity;
@@ -62,7 +67,7 @@ void ce_string_reserve(ce_string_t cestr, size_t capacity)
 
 void ce_string_set_char(ce_string_t cestr, size_t pos, char c)
 {
-    if (pos < cestr->capacity)
+    if (pos < ce_string_size(cestr))
     {
         cestr->rawPointer[pos] = c;
     }
