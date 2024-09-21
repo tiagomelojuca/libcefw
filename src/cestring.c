@@ -16,61 +16,61 @@ struct CeString
 
 ce_string_t ce_string_new(const char* cstr)
 {
-    ce_string_t cestr = _ce_string_alloc();
-    _ce_string_default_init(cestr);
-    ce_string_assign(cestr, cstr);
+    ce_string_t self = _ce_string_alloc();
+    _ce_string_default_init(self);
+    ce_string_assign(self, cstr);
 
-    return cestr;
+    return self;
 }
 
-void ce_string_free(ce_string_t cestr)
+void ce_string_free(ce_string_t self)
 {
-    free(cestr->rawPointer);
-    free(cestr);
+    free(self->rawPointer);
+    free(self);
 }
 
-const char* ce_string_c_str(ce_string_t cestr)
+const char* ce_string_c_str(ce_string_t self)
 {
-    return cestr->rawPointer;
+    return self->rawPointer;
 }
 
-size_t ce_string_size(ce_string_t cestr)
+size_t ce_string_size(ce_string_t self)
 {
-    return strlen(cestr->rawPointer);
+    return strlen(self->rawPointer);
 }
 
-void ce_string_reserve(ce_string_t cestr, size_t capacity)
+void ce_string_reserve(ce_string_t self, size_t capacity)
 {
-    if (capacity > cestr->capacity)
+    if (capacity > self->capacity)
     {
         char* newRawPointer = (char*) malloc(capacity);
-        memcpy(newRawPointer, cestr->rawPointer, cestr->capacity);
-        // memset(&newRawPointer[cestr->capacity], 0, capacity - cestr->capacity); // seens unnecessary
-        free(cestr->rawPointer);
+        memcpy(newRawPointer, self->rawPointer, self->capacity);
+        // memset(&newRawPointer[self->capacity], 0, capacity - self->capacity); // seens unnecessary
+        free(self->rawPointer);
 
-        cestr->capacity = capacity;
-        cestr->rawPointer = newRawPointer;
+        self->capacity = capacity;
+        self->rawPointer = newRawPointer;
     }
 }
 
-void ce_string_set_char(ce_string_t cestr, size_t pos, char c)
+void ce_string_set_char(ce_string_t self, size_t pos, char c)
 {
-    if (pos < ce_string_size(cestr))
+    if (pos < ce_string_size(self))
     {
-        cestr->rawPointer[pos] = c;
+        self->rawPointer[pos] = c;
     }
 }
 
-void ce_string_assign(ce_string_t cestr, const char* cstr)
+void ce_string_assign(ce_string_t self, const char* cstr)
 {
     const size_t srcBufLen = strlen(cstr) + 1;
 
-    while(srcBufLen > cestr->capacity)
+    while(srcBufLen > self->capacity)
     {
-        ce_string_reserve(cestr, cestr->capacity * cestr->growthFactor);
+        ce_string_reserve(self, self->capacity * self->growthFactor);
     }
 
-    memcpy(cestr->rawPointer, cstr, srcBufLen);
+    memcpy(self->rawPointer, cstr, srcBufLen);
 }
 
 // ---------------------------------------------------------------------------------
@@ -80,21 +80,21 @@ ce_string_t _ce_string_alloc()
     return (struct CeString*) malloc(sizeof(struct CeString));
 }
 
-void _ce_string_default_init(ce_string_t cestr)
+void _ce_string_default_init(ce_string_t self)
 {
     const size_t DEFAULT_CAPACITY      = 32;
     const size_t DEFAULT_GROWTH_FACTOR =  2;
 
-    _ce_string_init(cestr, DEFAULT_CAPACITY, DEFAULT_GROWTH_FACTOR);
+    _ce_string_init(self, DEFAULT_CAPACITY, DEFAULT_GROWTH_FACTOR);
 }
 
-void _ce_string_init(ce_string_t cestr, size_t capacity, size_t delta)
+void _ce_string_init(ce_string_t self, size_t capacity, size_t delta)
 {
-    cestr->capacity     = capacity;
-    cestr->growthFactor = delta;
-    cestr->rawPointer   = (char*) malloc(cestr->capacity);
+    self->capacity     = capacity;
+    self->growthFactor = delta;
+    self->rawPointer   = (char*) malloc(self->capacity);
 
-    memset(cestr->rawPointer, 0, cestr->capacity);
+    memset(self->rawPointer, 0, self->capacity);
 }
 
 // ---------------------------------------------------------------------------------
