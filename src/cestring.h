@@ -27,6 +27,9 @@ typedef struct CeString* ce_string_t; // Opaque Pointer (aka Opaque Handle)
     void        _ce_string_default_init(ce_string_t self);
     void        _ce_string_init(ce_string_t self, size_t capacity, size_t delta);
 
+    char*       _ce_string_buffer(ce_string_t self);
+    size_t      _ce_string_buflen(ce_string_t self);
+
 // ---------------------------------------------------------------------------------
 
 #ifdef __cplusplus

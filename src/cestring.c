@@ -9,7 +9,7 @@ struct CeString
 {
     size_t capacity;
     size_t growthFactor;
-    char*  rawPointer;
+    char*  rawBuffer;
 };
 
 // ---------------------------------------------------------------------------------
@@ -25,31 +25,31 @@ ce_string_t ce_string_new(const char* cstr)
 
 void ce_string_free(ce_string_t self)
 {
-    free(self->rawPointer);
+    free(self->rawBuffer);
     free(self);
 }
 
 const char* ce_string_c_str(ce_string_t self)
 {
-    return self->rawPointer;
+    return self->rawBuffer;
 }
 
 size_t ce_string_size(ce_string_t self)
 {
-    return strlen(self->rawPointer);
+    return strlen(self->rawBuffer);
 }
 
 void ce_string_reserve(ce_string_t self, size_t capacity)
 {
     if (capacity > self->capacity)
     {
-        char* newRawPointer = (char*) malloc(capacity);
-        memcpy(newRawPointer, self->rawPointer, self->capacity);
-        // memset(&newRawPointer[self->capacity], 0, capacity - self->capacity); // seens unnecessary
-        free(self->rawPointer);
+        char* newRawBuffer = (char*) malloc(capacity);
+        memcpy(newRawBuffer, self->rawBuffer, self->capacity);
+        // memset(&newRawBuffer[self->capacity], 0, capacity - self->capacity); // seens unnecessary
+        free(self->rawBuffer);
 
-        self->capacity = capacity;
-        self->rawPointer = newRawPointer;
+        self->capacity  = capacity;
+        self->rawBuffer = newRawBuffer;
     }
 }
 
@@ -57,7 +57,7 @@ void ce_string_set_char(ce_string_t self, size_t pos, char c)
 {
     if (pos < ce_string_size(self))
     {
-        self->rawPointer[pos] = c;
+        self->rawBuffer[pos] = c;
     }
 }
 
@@ -70,10 +70,8 @@ void ce_string_assign_from_c_str(ce_string_t self, const char* cstr)
         ce_string_reserve(self, self->capacity * self->growthFactor);
     }
 
-    memcpy(self->rawPointer, cstr, srcBufLen);
+    memcpy(self->rawBuffer, cstr, srcBufLen);
 }
-
-// ---------------------------------------------------------------------------------
 
 void ce_string_assign_from_cestr(ce_string_t self, ce_string_t other)
 {
@@ -84,7 +82,7 @@ void ce_string_assign_from_cestr(ce_string_t self, ce_string_t other)
         ce_string_reserve(self, self->capacity * self->growthFactor);
     }
 
-    memcpy(self->rawPointer, other->rawPointer, srcBufLen);
+    memcpy(self->rawBuffer, other->rawBuffer, srcBufLen);
 }
 
 // ---------------------------------------------------------------------------------
@@ -106,9 +104,19 @@ void _ce_string_init(ce_string_t self, size_t capacity, size_t delta)
 {
     self->capacity     = capacity;
     self->growthFactor = delta;
-    self->rawPointer   = (char*) malloc(self->capacity);
+    self->rawBuffer    = (char*) malloc(self->capacity);
 
-    memset(self->rawPointer, 0, self->capacity);
+    memset(self->rawBuffer, 0, self->capacity);
+}
+
+char* _ce_string_buffer(ce_string_t self)
+{
+    return self->rawBuffer;
+}
+
+size_t _ce_string_buflen(ce_string_t self)
+{
+    return self->capacity;
 }
 
 // ---------------------------------------------------------------------------------
