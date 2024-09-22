@@ -1,7 +1,7 @@
 #ifndef CESTRING_H_
 #define CESTRING_H_
 
-#include <stddef.h>
+#include "cedefs.h"
 
 #ifdef __cplusplus
 extern "C" {

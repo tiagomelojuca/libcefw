@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
 
-#include "../src/cestring.h"
+#include <cestring.h>
 
-TEST(CeStringTest, should_be_able_to_construct_string) {
+TEST(CeStringTest, should_be_able_to_construct_string)
+{
     ce_string_t ceStr1 = ce_string_new("Hello, World");
     ce_string_t ceStr2 = ce_string_new("Goodbye, World");
 
