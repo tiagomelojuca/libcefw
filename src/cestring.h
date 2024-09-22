@@ -19,7 +19,8 @@ typedef struct CeString* ce_string_t; // Opaque Pointer (aka Opaque Handle)
     size_t      ce_string_size(ce_string_t self);
     void        ce_string_reserve(ce_string_t self, size_t capacity);
     void        ce_string_set_char(ce_string_t self, size_t pos, char c);
-    void        ce_string_assign(ce_string_t self, const char* cstr);
+    void        ce_string_assign_from_c_str(ce_string_t self, const char* cstr);
+    void        ce_string_assign_from_cestr(ce_string_t self, ce_string_t other);
 
 // private:
     ce_string_t _ce_string_alloc();

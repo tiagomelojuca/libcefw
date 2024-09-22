@@ -18,7 +18,7 @@ ce_string_t ce_string_new(const char* cstr)
 {
     ce_string_t self = _ce_string_alloc();
     _ce_string_default_init(self);
-    ce_string_assign(self, cstr);
+    ce_string_assign_from_c_str(self, cstr);
 
     return self;
 }
@@ -61,7 +61,7 @@ void ce_string_set_char(ce_string_t self, size_t pos, char c)
     }
 }
 
-void ce_string_assign(ce_string_t self, const char* cstr)
+void ce_string_assign_from_c_str(ce_string_t self, const char* cstr)
 {
     const size_t srcBufLen = strlen(cstr) + 1;
 
@@ -71,6 +71,20 @@ void ce_string_assign(ce_string_t self, const char* cstr)
     }
 
     memcpy(self->rawPointer, cstr, srcBufLen);
+}
+
+// ---------------------------------------------------------------------------------
+
+void ce_string_assign_from_cestr(ce_string_t self, ce_string_t other)
+{
+    const size_t srcBufLen = ce_string_size(other) + 1;
+
+    while(srcBufLen > self->capacity)
+    {
+        ce_string_reserve(self, self->capacity * self->growthFactor);
+    }
+
+    memcpy(self->rawPointer, other->rawPointer, srcBufLen);
 }
 
 // ---------------------------------------------------------------------------------
