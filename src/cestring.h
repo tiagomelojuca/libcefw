@@ -13,7 +13,7 @@ typedef struct CeString* ce_string_t; // Opaque Pointer (aka Opaque Handle)
 
 // public:
     ce_string_t ce_string_new(const char* cstr);
-    void        ce_string_free(ce_string_t self);
+    void        ce_string_del(ce_string_t self);
 
     const char* ce_string_c_str(ce_string_t self);
     size_t      ce_string_size(ce_string_t self);

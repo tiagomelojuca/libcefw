@@ -23,7 +23,7 @@ ce_string_t ce_string_new(const char* cstr)
     return self;
 }
 
-void ce_string_free(ce_string_t self)
+void ce_string_del(ce_string_t self)
 {
     free(self->rawBuffer);
     free(self);

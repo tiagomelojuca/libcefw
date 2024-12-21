@@ -13,6 +13,6 @@ TEST(CeStringTest, should_be_able_to_construct_string)
     ce_string_assign_from_char(ceStr1, 'T');
     EXPECT_STREQ("T", ce_string_c_str(ceStr1));
 
-    ce_string_free(ceStr1);
-    ce_string_free(ceStr2);
+    ce_string_del(ceStr1);
+    ce_string_del(ceStr2);
 }
