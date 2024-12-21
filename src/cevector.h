@@ -13,7 +13,7 @@ typedef struct CeVector* ce_vector_t; // Opaque Pointer (aka Opaque Handle)
 
 // public:
     ce_vector_t ce_vector_new();
-    void        ce_vector_free(ce_vector_t self);
+    void        ce_vector_del(ce_vector_t self);
 
 // private:
     ce_vector_t _ce_vector_alloc();

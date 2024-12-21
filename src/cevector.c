@@ -14,7 +14,7 @@ ce_vector_t ce_vector_new()
     ;
 }
 
-void ce_vector_free(ce_vector_t self)
+void ce_vector_del(ce_vector_t self)
 {
     ;
 }
