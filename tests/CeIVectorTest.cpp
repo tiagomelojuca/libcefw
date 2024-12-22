@@ -16,7 +16,10 @@ int* make_integer(int n)
 
 TEST(CeIVectorTest, should_be_able_to_handle_elements)
 {
-    // TODO: Test get/set element when out of bound, so as front/back when empty vec
+    // Testing get/set element when out of bound, so as front/back when empty vec,
+    // currently returns a sentinel element. Should be a NULL instead? Not sure,
+    // since it's a vector of pointers, NULL *could* be an actual value, but would
+    // more likely a bug in user code
 
     ce_ivector_t ceVec = ce_ivector_new_with_default_deleter();
 
