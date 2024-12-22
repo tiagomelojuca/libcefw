@@ -21,10 +21,11 @@ typedef struct CeIndirectVector* ce_ivector_t; // Opaque Pointer (aka Opaque Han
     size_t       ce_ivector_capacity(ce_ivector_t self);
     size_t       ce_ivector_size(ce_ivector_t self);
 
-    void*        ce_ivector_get_element(ce_ivector_t self, size_t pos);
     void         ce_ivector_set_element(ce_ivector_t self, size_t pos, void* element);
+    void*        ce_ivector_get_element(ce_ivector_t self, size_t pos);
     void*        ce_ivector_front(ce_ivector_t self);
     void*        ce_ivector_back(ce_ivector_t self);
+    void*        ce_ivector_sentinel_value(ce_ivector_t self);
 
     void         ce_ivector_clear(ce_ivector_t self);
     void         ce_ivector_push_back(ce_ivector_t self, void* element);

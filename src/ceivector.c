@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <stdio.h>
-
 // ---------------------------------------------------------------------------------
 
 struct CeIndirectVector
@@ -71,16 +69,6 @@ size_t ce_ivector_size(ce_ivector_t self)
     return self->length;
 }
 
-void* ce_ivector_get_element(ce_ivector_t self, size_t pos)
-{
-    // TODO: Return NULL when out of bound?
-
-    if (pos < ce_ivector_size(self))
-    {
-        return self->rawBuffer[pos];
-    }
-}
-
 void ce_ivector_set_element(ce_ivector_t self, size_t pos, void* element)
 {
     // TODO: Some kind of error checking for out of bound?
@@ -96,6 +84,16 @@ void ce_ivector_set_element(ce_ivector_t self, size_t pos, void* element)
     }
 }
 
+void* ce_ivector_get_element(ce_ivector_t self, size_t pos)
+{
+    if (pos < ce_ivector_size(self))
+    {
+        return self->rawBuffer[pos];
+    }
+
+    return ce_ivector_sentinel_value(self); // Better NULL when out of bound?
+}
+
 void* ce_ivector_front(ce_ivector_t self)
 {
     return ce_ivector_get_element(self, 0);
@@ -104,6 +102,11 @@ void* ce_ivector_front(ce_ivector_t self)
 void* ce_ivector_back(ce_ivector_t self)
 {
     return ce_ivector_get_element(self, self->length - 1);
+}
+
+void* ce_ivector_sentinel_value(ce_ivector_t self)
+{
+    return self->rawBuffer;
 }
 
 void ce_ivector_clear(ce_ivector_t self)

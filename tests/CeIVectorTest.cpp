@@ -24,6 +24,10 @@ TEST(CeIVectorTest, should_be_able_to_handle_elements)
     ASSERT_EQ(ce_ivector_capacity(ceVec), 32);
     ASSERT_EQ(ce_ivector_size(ceVec), 0);
 
+    ASSERT_EQ(ce_ivector_get_element(ceVec, 0), ce_ivector_sentinel_value(ceVec));
+    ASSERT_EQ(ce_ivector_front(ceVec), ce_ivector_sentinel_value(ceVec));
+    ASSERT_EQ(ce_ivector_back(ceVec), ce_ivector_sentinel_value(ceVec));
+
     for (int i = 42; i >= 11; i--)
     {
         ce_ivector_push_back(ceVec, make_integer(i));
@@ -62,6 +66,7 @@ TEST(CeIVectorTest, should_be_able_to_handle_elements)
     ce_ivector_set_element(ceVec, lastPos, newElement);
     ASSERT_EQ(ce_ivector_get_element(ceVec, lastPos), newElement);
     ASSERT_EQ(ce_ivector_back(ceVec), newElement);
+    ASSERT_EQ(ce_ivector_get_element(ceVec, lastPos + 1), ce_ivector_sentinel_value(ceVec));
     ASSERT_EQ(*(int*)ce_ivector_back(ceVec), 100);
 
     ce_ivector_clear(ceVec);
