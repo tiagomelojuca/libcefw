@@ -18,6 +18,7 @@ add_library(
   STATIC
   "${libcefw_SOURCE_DIR}/cestring.c"
   "${libcefw_SOURCE_DIR}/cevector.c"
+  "${libcefw_SOURCE_DIR}/ceivector.c"
 )
 
 add_executable(
@@ -25,6 +26,7 @@ add_executable(
   ${libcefw_TESTS_DIR}/main.cpp
   ${libcefw_TESTS_DIR}/CeStringTest.cpp
   ${libcefw_TESTS_DIR}/CeVectorTest.cpp
+  ${libcefw_TESTS_DIR}/CeIVectorTest.cpp
 )
 
 target_include_directories(
